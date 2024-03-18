@@ -29,7 +29,7 @@ from queue import Queue
 
 def hash_state(state):
     """
-    Hash the state
+    Hash the state into a string
     """
     return json.dumps(state)
 
@@ -107,40 +107,41 @@ def wordify_path(path):
     return string
 
 
-# Initial state, all on the left side
-starting_state = {"F": False, "G": False, "C": False, "W": False}
+if __name__ == "__main__":
+    # Initial state, all on the left side
+    starting_state = {"F": False, "G": False, "C": False, "W": False}
 
-# Queue to store the states
-q = Queue()
-q.enqueue((starting_state, [starting_state]))
+    # Queue to store the states
+    q = Queue()
+    q.enqueue((starting_state, [starting_state]))
 
-# Set to store the visited states
-visited = set()
-visited.add(hash_state(starting_state))
+    # Set to store the visited states
+    visited = set()
+    visited.add(hash_state(starting_state))
 
-# Shortest path
-shortest_path = None
+    # Shortest path
+    shortest_path = None
 
-# BFS
-while not q.is_empty():
-    # Get the current state and path
-    current_state, path = q.dequeue()
-    if (
-        current_state["F"]
-        and current_state["G"]
-        and current_state["C"]
-        and current_state["W"]
-    ):
-        # If the current state is the goal state, break
-        shortest_path = path
-        break
-    for neighbor in get_neighbors(current_state):
-        # For each neighbor, if it's not visited, add it to the queue and mark it as visited
-        if hash_state(neighbor) not in visited:
-            q.enqueue((neighbor, path + [neighbor]))
-            visited.add(hash_state(neighbor))
+    # BFS
+    while not q.is_empty():
+        # Get the current state and path
+        current_state, path = q.dequeue()
+        if (
+            current_state["F"]
+            and current_state["G"]
+            and current_state["C"]
+            and current_state["W"]
+        ):
+            # If the current state is the goal state, break
+            shortest_path = path
+            break
+        for neighbor in get_neighbors(current_state):
+            # For each neighbor, if it's not visited, add it to the queue and mark it as visited
+            if hash_state(neighbor) not in visited:
+                q.enqueue((neighbor, path + [neighbor]))
+                visited.add(hash_state(neighbor))
 
-# Print the shortest path
-print(json.dumps(shortest_path, indent=2))
-# Print human-readable path
-print("\n".join(wordify_path(shortest_path)))
+    # Print the shortest path
+    print(json.dumps(shortest_path, indent=2))
+    # Print human-readable path
+    print("\n".join(wordify_path(shortest_path)))
