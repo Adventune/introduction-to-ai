@@ -85,7 +85,5 @@ if __name__ == "__main__":
                 q.enqueue((neighbor, path + [neighbor]))
                 visited.add(hash_state(neighbor))
 
-    # Print the shortest path
-    print(json.dumps(shortest_path, indent=2))
     # Print human-readable path
     print("\n".join(wordify_path(shortest_path)))
