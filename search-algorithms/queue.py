@@ -1,4 +1,5 @@
 """
+Copyright (c) 2024 Author. All Rights Reserved.
 Queue implementation to use with algorithms
 """
 
